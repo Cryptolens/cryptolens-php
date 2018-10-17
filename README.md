@@ -28,7 +28,7 @@ $activate = cryptolens_activate(
 The code above uses our testing access token, product id, license key and machine code.
 In a real values for you can be obtained as follows:
 
- * Access tokens can be created at https://app.cryptolens.io/User/AccessToken
+ * Access tokens can be created at https://app.cryptolens.io/User/AccessToken (remember to check 'Activate' and keep everything else unchanged)
  * The product id is found by selecting the relevant product from the list of products
    (https://app.cryptolens.io/Product), and then the product id is found above the list
    of keys.
