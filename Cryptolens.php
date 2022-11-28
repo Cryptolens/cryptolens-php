@@ -1,7 +1,26 @@
 <?php
 
-function cryptolens_activate($token, $product_id, $key, $machine_code)
+# ADDED:
+#
+# - function documentation
+# - added type declaration to function parameters (Prevents returning false, if product id is passed as string)
+# - added better error return value handling
+#
+
+/**
+ * cryptolens_activate - Allows you to activate a license key through the Cryptolens API
+ * 
+ * @param string $token The access token from the website <https://app.cryptolens.io/User/AccessToken#/>
+ * @param int $product_id The product id the license is for. You can get this Info by clicking on Products > [Your product] > "Product ID"
+ * @param string $key The license key to activate
+ * @param string $machine_code A unique machine code for the machine the license is being activated for. Length >= 1;
+ * @return boolean|array Returns true on success and an array on failure. Details can be gained with the "error_message" key
+ */
+function cryptolens_activate(string $token, int $product_id, string $key, string $machine_code)
 {
+
+# Check 
+
   $params = 
     array(
         'token' => $token
@@ -41,11 +60,13 @@ function cryptolens_activate($token, $product_id, $key, $machine_code)
     || !property_exists($resp, 'signature')
      )
   {
-    return FALSE;
+    return [
+      "error_message" => "Either message, licenseKey or the signature is missing or empty in the Cryptolens response. Possibly the license key is invalid."
+    ];
   }
 
   $license_key_string = base64_decode($resp->{'licenseKey'});
-  if (!$license_key_string) { return FALSE; }
+  if (!$license_key_string) { return ["error_message" => "Could not decode license key"]; }
 
   $license_key = json_decode($license_key_string);
   if ( is_null($license_key)
@@ -59,21 +80,21 @@ function cryptolens_activate($token, $product_id, $key, $machine_code)
     //|| !is_iterable($license_key->{'ActivatedMachines'})
      )
   {
-    return FALSE;
+    return ["error_message" => "Either the license key is missing or some elements are in the incorrect type in the Cryptolens response"];
   }
 
   if ( $license_key->{'ProductId'} !== $product_id
     || $license_key->{'Key'} !== $key
      )
   {
-    return FALSE;
+    return ["error_message" => "Either the key or the product id might be incorrect."];
   }
 
   $machine_found = FALSE;
   foreach ($license_key->{'ActivatedMachines'} as $machine) {
     if (!property_exists($machine, 'Mid'))
     {
-      return FALSE;
+      return ["error_message" => "The License key has been already activated for this machine"];
     }
 
     if ($machine->{'Mid'} == $machine_code) { $machine_found = TRUE; }
@@ -82,9 +103,10 @@ function cryptolens_activate($token, $product_id, $key, $machine_code)
   if (!$machine_found) { return FALSE; }
 
   $time = time();
-  if ($license_key->{'Expires'} < $time) { return FALSE; }
-
+  if ($license_key->{'Expires'} < $time) { return ["error_message" => "Your key expired! Please get a new one."]; }
   return TRUE;
 }
+
+}}
 
 ?>
