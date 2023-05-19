@@ -6,6 +6,13 @@ namespace Cryptolens_PHP_Client {
         public const CRYPTOLENS_OUTPUT_PHP = 1;
 
         public const CRYPTOLENS_OUTPUT_JSON = 2;
+
+        public const CRYPTOLENS_KEY = "Key";
+
+        public const CRYPTOLENS_AUTH = "Auth";
+
+        public const CRYPTOLENS_PRODUCT = "Product";
+        
         private string $token;
 
         private int $version = 2;
@@ -45,15 +52,31 @@ namespace Cryptolens_PHP_Client {
         }
 
         public static function loader(){
+            require_once "./classes/Helper.cryptolens.php";
             require_once "./classes/Key.cryptolens.php";
             require_once "./classes/Endpoints.cryptolens.php";
             require_once "./classes/Results.endpoints.cryptolens.php";
+            require_once "./classes/Auth.cryptolens.php";
+            require_once "./classes/Product.cryptolens.php";
         }
 
-        public static function outputHelper($data){
+        public static function outputHelper($data, int $error = 0){
             if(self::$output == self::CRYPTOLENS_OUTPUT_PHP){
+                if($error == 1){
+                    return [
+                        "error" => "An error occured!",
+                        "message" => $data["message"]
+                    ];
+                    
+                }
                 return (array) $data;
             } elseif(self::$output == self::CRYPTOLENS_OUTPUT_JSON){
+                if($error == 1){
+                    return [
+                        "error" => "An error occured!",
+                        "message" => $data["message"]
+                    ];
+                }
                 return json_encode($data);
             }
         }

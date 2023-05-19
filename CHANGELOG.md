@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.4
+
+* outsourced helper function into the `Helper.cryptolens.php` class
+* improved error messages and removed unnecessary information on failure
+* added the `Auth.cryptolens.php` which brings support to the `keyLock` Auth endpoint
+* added the `Product.cryptolens.php` to support the `getKeys` and `getProducts` endpoint
+
 ## v0.3.1
 
 * added support for composer

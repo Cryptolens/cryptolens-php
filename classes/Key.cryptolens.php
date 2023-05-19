@@ -3,9 +3,14 @@ namespace Cryptolens_PHP_Client {
     class Key {
         private Cryptolens $cryptolens;
 
+        /** for future use */
+        private string $group;
+
         public function __construct($cryptolens){
             $this->cryptolens = $cryptolens;
+            $this->group = Cryptolens::CRYPTOLENS_KEY;
         }
+
 
         /**
          * activate() - Activates a Key

@@ -2,6 +2,7 @@
 namespace Cryptolens_PHP_Client {
     class Endpoints {
         public static array $endpoints = [
+            # Keys
             "activate" => "https://api.cryptolens.io/api/key/activate",
             "deactivate" => "https://api.cryptolens.io/api/key/deactivate",
             "createKey" => "https://api.cryptolens.io/api/key/createkey",
@@ -13,11 +14,18 @@ namespace Cryptolens_PHP_Client {
             "extendLicense" => "https://api.cryptolens.io/api/key/extendlicense",
             "removeFeature" => "https://api.cryptolens.io/api/key/removefeature",
             "unblockKey" => "https://api.cryptolens.io/api/key/unblockkey",
-            "machineLockLimit" => "https://api.cryptolens.io/api/key/machinelocklimit"
+            "machineLockLimit" => "https://api.cryptolens.io/api/key/machinelocklimit",
+            # Auth
+            "keyLock" => "https://api.cryptolens.io/api/auth/keylock",
+            # Products
+            "getKeys" => "https://api.cryptolens.io/api/product/getkeys",
+            "getProducts" => "https://api.cryptolens.io/api/product/getproducts"
         ];
 
         public static array $no_response_check = [
-            "createKey"
+            "createKey",
+            "getKeys",
+            "getProducts"
         ];
 
         public static function get_endpoint($function_name){

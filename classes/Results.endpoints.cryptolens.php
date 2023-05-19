@@ -60,8 +60,30 @@ namespace Cryptolens_PHP_Client {
                 "machineLockLimit" => [
                     "Result",
                     "Message"
+                ],
+            ],
+            "Auth" => [
+                "keyLock" => [
+                    "keyid",
+                    "token",
+                    "result",
+                    "message"
                 ]
-
+                ],
+            "Product" => [
+                "getKeys" => [
+                    "LicenseKeys",
+                    "Returned",
+                    "Total",
+                    "PageCount",
+                    "Result",
+                    "Message"
+                ],
+                "getProducts" => [
+                    "Products",
+                    "Result",
+                    "Message"
+                ]
             ]
         ];
 

@@ -59,14 +59,17 @@ composer require ente/cryptolens-php
   * [x] remove_feature
   * [x] unblock_key
   * [x] machine_lock_limit
-  * [ ] change_notes*
-  * [ ] change_reseller*
-  * [ ] change_customer*
+  * [ ] change_notes\*
+  * [ ] change_reseller\*
+  * [ ] change_customer\*
   * [ ] Offline Verification
 * Customer
 * Data Object
 * Product
+  * [x] get_keys
+  * [x] get_products
 * Auth
+  * [x] key_lock **(Use with caution\*\*)**  
 * Payment Form
 * Get Token
 * Analytics
@@ -75,3 +78,4 @@ composer require ente/cryptolens-php
 * Reseller
 
 * = Considered with less priority, therefore this endpoint will not be implemented, yet.
+* ** = This method creates, retrieves or contains sensitive information (e.g. Access Tokens)
