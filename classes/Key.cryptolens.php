@@ -46,12 +46,12 @@ namespace Cryptolens_PHP_Client {
                     return "Key already expired."; # key already expired.
                 }
 
-                return [
+                return Cryptolens::outputHelper([
                     "response" => $c,
                     "license" => $license
-                ];
+                ]);
             } else {
-                return $c;
+                return Cryptolens::outputHelper($c);
             }
         }
 
@@ -71,7 +71,7 @@ namespace Cryptolens_PHP_Client {
                 if($c["result"] == 0){
                     return true;
                 } else {
-                    return $c;
+                    return Cryptolens::outputHelper($c);
                 }
             }
         }
@@ -88,18 +88,18 @@ namespace Cryptolens_PHP_Client {
             $c = $this->connection($parms, "createKey");
             if($c == true){
                 switch($c){
-                    case $c["Result"] != 0:
-                        return [
+                    case $c["result"] != 0:
+                        return Cryptolens::outputHelper([
                             "error" => "An error occured.",
                             "response" => $c
-                        ];
+                        ]);
                     case $c["key"] == null && $c["keys"] == null:
-                        return [
+                        return Cryptolens::outputHelper([
                             "error" => "Key is empty.",
                             "reponse" => $c
-                        ];
+                        ]);
                 };
-                return $c;
+                return Cryptolens::outputHelper($c);
             } else {
                 return false;
             }
@@ -110,18 +110,143 @@ namespace Cryptolens_PHP_Client {
             $c = $this->connection($parms, "createTrialKey");
             if($c == true){
                 switch($c){
-                    case $c["Result"] != 0:
-                        return [
+                    case $c["result"] != 0:
+                        return Cryptolens::outputHelper([
                             "error" => "An error occured.",
                             "response" => $c
-                        ];
-                    case $c["Result"] == 0 && $c["Key"] == null:
-                        return [
+                        ]);
+                    case $c["result"] == 0 && $c["key"] == null:
+                        return Cryptolens::outputHelper([
                             "error" => "The key response is empty even though the Result returned 0 (success).",
                             "response" => $c
-                        ];
+                        ]);
                 }
-                return $c;
+                return Cryptolens::outputHelper($c);
+            } else {
+                return false;
+            }
+        }
+
+        /**
+         * create_key_from_template() Allows you to create a key from an existing template
+         * 
+         * @param int $template The template ID, can be obtained from the Products Dashboard > License Templates > Edit and then the number from the URI
+         * @return array|bool Returns an array with the response or bool on failure
+         */
+        public function create_key_from_template($template){
+            $parms = $this->build_params($this->cryptolens->get_token(), null, null, null, ["LicenseTemplateId" => $template]);
+            $c = $this->connection($parms, "createKeyFromTemplate");
+            if($c == true){
+                if($c["result"] != 0){
+                    return Cryptolens::outputHelper([
+                        "error" => "An error occured.",
+                        "response" => $c
+                    ]);
+                } else {
+                    return Cryptolens::outputHelper($c);
+                }
+            } else {
+                return false;
+            }
+        }
+
+        /**
+         * get_key() - Allows you to get more information about a key, returns the same data as `activate()`
+         * 
+         * @param string $key The key you want to get the data from
+         * @param array $additional_flags Allows you to set more options, like e.g. metadata, fieldstoreturn, floatingtimeinterval and modelversion
+         * @return array|bool Returns the key "response" and "licenseKey" (base64 decoded JSON array)
+         */
+        public function get_key($key, $additional_flags = null){
+            $parms = $this->build_params($this->cryptolens->get_token(), $this->cryptolens->get_product_id(), $key, null, $additional_flags);
+            $c = $this->connection($parms, "getKey");
+            if($c == true){
+                switch($c){
+                    case $c["result"] != 0:
+                        return Cryptolens::outputHelper([
+                            "error" => "An error occured.",
+                            "response" => $c
+                        ]);
+                    case $c["licenseKey"] == null:
+                        return Cryptolens::outputHelper([
+                            "error" => "License Key object empty!",
+                            "reponse" => $c
+                        ]);
+                }
+
+                return Cryptolens::outputHelper([
+                    "response" => $c,
+                    "licenseKey" => base64_decode($c["licenseKey"])
+                ]);
+            } else {
+                return false;
+            }
+        }
+
+        /**
+         * add_feature() - Enables a certain feature (F1-8) for a specified key.
+         * 
+         * @param string $key The key to enable the feature
+         * @param int $feature The feature number 1 - 8 to enable
+         * @return array|bool Returns the response on success and a bool on failure
+         * 
+         * @note When using SKGL a new key will be generated and included inside the "message" key, otherwise it will be empty
+         */
+        public function add_feature(string $key, int $feature){
+            $parms = $this->build_params($this->cryptolens->get_token(), $this->cryptolens->get_product_id(), $key, null, ["Feature" => $feature]);
+            $c = $this->connection($parms, "addFeature");
+            if($c == true){
+                if($c["result"] == 0){
+                    return Cryptolens::outputHelper($c);
+                } else {
+                    return Cryptolens::outputHelper([
+                        "error" => "An error occured!",
+                        "response" => $c
+                    ]);
+                }
+            } else {
+                return false;
+            }
+        }
+
+        public function block_key(string $key){
+            $parms = $this->build_params($this->cryptolens->get_token(), $this->cryptolens->get_product_id(), $key);
+            $c = $this->connection($parms, "blockKey");
+            if($c == true){
+                if($c["result"] == 0){
+                    return true;
+                } else {
+                    return Cryptolens::outputHelper([
+                        "error" => "An error occured.",
+                        "response" => $c
+                    ]);
+                }
+            } else {
+                return false;
+            }
+        }
+
+        /**
+         * extend_license() - Allows you to extend a license by $days.
+         * 
+         * @param string $key The license to extend
+         * @param int $days The amount of (x) days to extend the license
+         * 
+         * @note If the key is already expired from the current date the key is x days valid. If the key has not expired and has e.g. 15 days left, the key will be valid 15 + x days
+         * If the SKGL algorithm is used, the "message" key contains the new key, otherwise you can use the same key.
+         */
+        public function extend_license(string $key, int $days){
+            $parms = $this->build_params($this->cryptolens->get_token(), $this->cryptolens->get_product_id(), $key, null, ["NoOfDays" => $days]);
+            $c = $this->connection($parms, "extendLicense");
+            if($c == true){
+                if($c["result"] == 0){
+                    return Cryptolens::outputHelper($c);
+                } else {
+                    return Cryptolens::outputHelper([
+                        "error" => "An error occured.",
+                        "response" => $c
+                    ]);
+                }
             } else {
                 return false;
             }
@@ -166,7 +291,6 @@ namespace Cryptolens_PHP_Client {
                 CURLOPT_POST => 1,
                 CURLOPT_POSTFIELDS => $post
             ));
-            print_r($post);
             $res = curl_exec($c);
             if($res == false){
                 return curl_error($c);

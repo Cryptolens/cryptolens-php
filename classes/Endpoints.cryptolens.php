@@ -5,7 +5,12 @@ namespace Cryptolens_PHP_Client {
             "activate" => "https://api.cryptolens.io/api/key/activate",
             "deactivate" => "https://api.cryptolens.io/api/key/deactivate",
             "createKey" => "https://api.cryptolens.io/api/key/createkey",
-            "createTrialKey" => "https://api.cryptolens.io/api/key/createtrialkey"
+            "createTrialKey" => "https://api.cryptolens.io/api/key/createtrialkey",
+            "createKeyFromTemplate" => "https://api.cryptolens.io/api/key/createkeyfromtemplate",
+            "getKey" => "https://api.cryptolens.io/api/key/getkey",
+            "addFeature" => "https://api.cryptolens.io/api/key/addfeature",
+            "blockKey" => "https://api.cryptolens.io/api/key/blockkey",
+            "extendLicense" => "https://api.cryptolens.io/api/key/extendlicense"
         ];
 
         public static array $no_response_check = [

@@ -44,14 +44,25 @@ In a real values for you can be obtained as follows:
   * [x] deactivate
   * [x] create_key
   * [x] create_trial_key
-  * [ ] create_key_from_template
-  * [ ] get_key
-  * [ ] add_feature
-  * [ ] block_key
-  * [ ] extend_license
+  * [x] create_key_from_template
+  * [x] get_key
+  * [x] add_feature
+  * [x] block_key
+  * [x] extend_license
   * [ ] remove_feature
   * [ ] unblock_key
   * [ ] machine_lock_limit
   * [ ] change_notes
   * [ ] change_reseller
   * [ ] change_customer
+  * [ ] Offline Verification
+* Customer
+* Data Object
+* Product
+* Auth
+* Payment Form
+* Get Token
+* Analytics
+* Message
+* Subscription
+* Reseller

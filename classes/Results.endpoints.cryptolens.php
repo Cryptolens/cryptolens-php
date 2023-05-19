@@ -23,6 +23,31 @@ namespace Cryptolens_PHP_Client {
                     "Key",
                     "Result",
                     "Message"
+                ],
+                "createKeyFromTemplate" => [
+                    "Result",
+                    "Key",
+                    "RawResponse",
+                    "Message"
+                ],
+                "getKey" => [
+                    "LicenseKey",
+                    "Signature",
+                    "Metadata",
+                    "Result",
+                    "Message"
+                ],
+                "addFeature" => [
+                    "Result",
+                    "Message"
+                ],
+                "blockKey" => [
+                    "Result",
+                    "Message"
+                ],
+                "extendLicense" => [
+                    "Result",
+                    "Message"
                 ]
             ]
         ];
