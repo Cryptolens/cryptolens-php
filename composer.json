@@ -1,0 +1,24 @@
+{
+    "name": "ente/cryptolens-php",
+    "description": "Manage your licenses with this Cryptolens API client",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ente",
+            "email": "ente@openducks.org"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=7.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Cryptolens_PHP_Client\\": "classes/"
+        },
+        "files": [
+            "Cryptolens.php"
+        ]
+    }
+}

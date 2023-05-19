@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.3.1
+
+* added support for composer
+* minor change to the `unblock_key`-function, it now returns a true on success and not the full Cryptolens response
+
 ## v0.3
 
 * added support for Key endpoints `removeFeature`, `unblockKey`, `machineLockLimit`

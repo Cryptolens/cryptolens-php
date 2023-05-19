@@ -14,13 +14,11 @@ ini_set("display_errors", 1);
 require_once "./loader.php";
 use Cryptolens_PHP_Client\Cryptolens;
 use Cryptolens_PHP_Client\Key;
-$c = new Cryptolens("YOUR_TOKEN", 12345);
+$c = new Cryptolens("YOUR_TOKEN", 12345, Cryptolens::CRYPTOLENS_OUTPUT_JSON);
 $k = new Key($c);
 
 $key = "XXXXX-XXXXX-XXXXX-XXXXX";
 $machine_id = "MACHINE-ID";
-
-echo "<pre>";
 print_r("Key 'activate':" . var_dump($k->activate($key, $machine_id)));
 ?>
 ```
@@ -28,7 +26,7 @@ print_r("Key 'activate':" . var_dump($k->activate($key, $machine_id)));
 The code above uses our testing access token, product id, license key and machine code.
 In a real values for you can be obtained as follows:
 
-* Access tokens can be created at <https://app.cryptolens.io/User/AccessToken> (remember to check 'Activate' and keep everything else unchanged)
+* Access tokens can be created at <https://app.cryptolens.io/User/AccessToken>
 * The product id is found by selecting the relevant product from the list of products
    (<https://app.cryptolens.io/Product>), and then the product id is found above the list
    of keys.
@@ -36,6 +34,15 @@ In a real values for you can be obtained as follows:
 * Currently the PHP library does not compute the machine code, either the machine
    code can be computed by the application, or a dummy value can be used. In a future
    release the library itself will compute the machine code.
+
+## Installation
+
+You can either clone this repository and require the `loader.php` (which contains a autoloader) or use composer via console:
+
+```bash
+composer require ente/cryptolens-php
+
+```
 
 ## Endpoints
 

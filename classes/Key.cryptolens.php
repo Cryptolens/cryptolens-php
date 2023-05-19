@@ -202,7 +202,7 @@ namespace Cryptolens_PHP_Client {
             $c = $this->connection($parms, "addFeature");
             if($c == true){
                 if($c["result"] == 0){
-                    return Cryptolens::outputHelper($c);
+                    return true;
                 } else {
                     return Cryptolens::outputHelper([
                         "error" => "An error occured!",
@@ -274,7 +274,7 @@ namespace Cryptolens_PHP_Client {
             $parms = $this->build_params($this->cryptolens->get_token(), $this->cryptolens->get_product_id(), $key);
             $c = $this->connection($parms, "unblockKey");
             if($c == true || $this->check_rm($c)){
-                return Cryptolens::outputHelper($c);
+                return true;
             } else {
                 Cryptolens::outputHelper([
                     "error" => "An error occured",
