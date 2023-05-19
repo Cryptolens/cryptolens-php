@@ -2,6 +2,7 @@
 namespace Cryptolens_PHP_Client {
     class Cryptolens {
 
+
         public const CRYPTOLENS_OUTPUT_PHP = 1;
 
         public const CRYPTOLENS_OUTPUT_JSON = 2;
@@ -30,11 +31,12 @@ namespace Cryptolens_PHP_Client {
             $this->set_product_id($productid);
         }
 
+
         public function get_token(){
             return $this->token;
         }
 
-        public function get_product_id(){
+      public function get_product_id(){
             return $this->productId;
         }
 
