@@ -10,7 +10,10 @@ namespace Cryptolens_PHP_Client {
             "getKey" => "https://api.cryptolens.io/api/key/getkey",
             "addFeature" => "https://api.cryptolens.io/api/key/addfeature",
             "blockKey" => "https://api.cryptolens.io/api/key/blockkey",
-            "extendLicense" => "https://api.cryptolens.io/api/key/extendlicense"
+            "extendLicense" => "https://api.cryptolens.io/api/key/extendlicense",
+            "removeFeature" => "https://api.cryptolens.io/api/key/removefeature",
+            "unblockKey" => "https://api.cryptolens.io/api/key/unblockkey",
+            "machineLockLimit" => "https://api.cryptolens.io/api/key/machinelocklimit"
         ];
 
         public static array $no_response_check = [

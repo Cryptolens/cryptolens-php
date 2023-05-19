@@ -48,7 +48,20 @@ namespace Cryptolens_PHP_Client {
                 "extendLicense" => [
                     "Result",
                     "Message"
+                ],
+                "removeFeature" => [
+                    "Result",
+                    "Message"
+                ],
+                "unblockKey" => [
+                    "Result",
+                    "Message"
+                ],
+                "machineLockLimit" => [
+                    "Result",
+                    "Message"
                 ]
+
             ]
         ];
 

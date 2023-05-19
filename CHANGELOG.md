@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.3
+
+* added support for Key endpoints `removeFeature`, `unblockKey`, `machineLockLimit`
+
 ## v0.2
 
 * removed debugging code

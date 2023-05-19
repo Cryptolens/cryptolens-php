@@ -15,7 +15,7 @@ namespace Cryptolens_PHP_Client {
          * @return bool|array Returns an array with the Cryptolens reponse and the decoded license including informations about the key itself. Returns false on failure.
          * @link https://app.cryptolens.io/docs/api/v3/activate
          */
-        public function activate($key, $machineid){
+        public function activate(string $key, string $machineid){
             $parms = $this->build_params($this->cryptolens->get_token(), $this->cryptolens->get_product_id(), $key, $machineid);
             $c = $this->connection($parms, "activate");
             if($c == true){
@@ -62,7 +62,7 @@ namespace Cryptolens_PHP_Client {
          * @param string $machineid The machine ID the key is mapped to, you can leave this empty, but sometimes you recieve an error. Read more in the documentation.
          * @link https://api.cryptolens.io/api/key/deactivate
          */
-        public function deactivate($key, $machineid = null){
+        public function deactivate(string $key, string $machineid = null){
             $parms = $this->build_params($this->cryptolens->get_token(), $this->cryptolens->get_product_id(), $key, $machineid);
             $c = $this->connection($parms, "deactivate");
 
@@ -83,7 +83,7 @@ namespace Cryptolens_PHP_Client {
          * @return array|bool Returns an array with the keys "Key", "CustomerId" (only if "NewCustomer" or "AddOrUseExistingCustomer" is set), "Result" and "Message". The key "Key" gets renamed to "Keys" if "NoOfKeys" is greater than 1. On error it returns the Cryptolens response, with the "error" and "response" key
          * @link https://api.cryptolens.io/api/key/createKey
          */
-        public function create_key($additional_flags = null){
+        public function create_key(array $additional_flags = null){
             $parms = $this->build_params($this->cryptolens->get_token(), $this->cryptolens->get_product_id(), null, null, $additional_flags);
             $c = $this->connection($parms, "createKey");
             if($c == true){
@@ -105,7 +105,12 @@ namespace Cryptolens_PHP_Client {
             }
         }
 
-        public function create_trial_key($machineId = null){
+        /**
+         * create_trial_key() - Creates a trial key optionally locked to a machineId
+         * 
+         * @param string [optional] Lock the new generated key to a machineId
+         */
+        public function create_trial_key(string $machineId = null){
             $parms = $this->build_params($this->cryptolens->get_token(), $this->cryptolens->get_product_id(), null, $machineId);
             $c = $this->connection($parms, "createTrialKey");
             if($c == true){
@@ -133,7 +138,7 @@ namespace Cryptolens_PHP_Client {
          * @param int $template The template ID, can be obtained from the Products Dashboard > License Templates > Edit and then the number from the URI
          * @return array|bool Returns an array with the response or bool on failure
          */
-        public function create_key_from_template($template){
+        public function create_key_from_template(int $template){
             $parms = $this->build_params($this->cryptolens->get_token(), null, null, null, ["LicenseTemplateId" => $template]);
             $c = $this->connection($parms, "createKeyFromTemplate");
             if($c == true){
@@ -157,7 +162,7 @@ namespace Cryptolens_PHP_Client {
          * @param array $additional_flags Allows you to set more options, like e.g. metadata, fieldstoreturn, floatingtimeinterval and modelversion
          * @return array|bool Returns the key "response" and "licenseKey" (base64 decoded JSON array)
          */
-        public function get_key($key, $additional_flags = null){
+        public function get_key(string $key, array $additional_flags = null){
             $parms = $this->build_params($this->cryptolens->get_token(), $this->cryptolens->get_product_id(), $key, null, $additional_flags);
             $c = $this->connection($parms, "getKey");
             if($c == true){
@@ -251,6 +256,45 @@ namespace Cryptolens_PHP_Client {
                 return false;
             }
         }
+        # returns new key if skgl
+        public function remove_feature(string $key, int $feature){
+            $parms = $this->build_params($this->cryptolens->get_token(), $this->cryptolens->get_product_id(), $key, null, ["Feature" => $feature]);
+            $c = $this->connection($parms, "removeFeature");
+            if($c == true || $this->check_rm($c)){
+                return Cryptolens::outputHelper($c);
+            } else {
+                Cryptolens::outputHelper([
+                    "error" => "An error occured",
+                    "response" => $c
+                ]);
+            }
+        }
+
+        public function unblock_key(string $key){
+            $parms = $this->build_params($this->cryptolens->get_token(), $this->cryptolens->get_product_id(), $key);
+            $c = $this->connection($parms, "unblockKey");
+            if($c == true || $this->check_rm($c)){
+                return Cryptolens::outputHelper($c);
+            } else {
+                Cryptolens::outputHelper([
+                    "error" => "An error occured",
+                    "response" => $c
+                ]);
+            }
+        }
+
+        public function machine_lock_limit(string $key, int $machines){
+            $parms = $this->build_params($this->cryptolens->get_token(), $this->cryptolens->get_product_id(), $key, null, ["NumberOfMachines" => $machines]);
+            $c = $this->connection($parms, "machineLockLimit");
+            if($c == true || $this->check_rm($c)){
+                return Cryptolens::outputHelper($c);
+            } else {
+                Cryptolens::outputHelper([
+                    "error" => "An error occured",
+                    "response" => $c
+                ]);
+            }
+        }
 
         /** 
          * build_params() - Internal helper function building the parameters for the cURL request
@@ -320,6 +364,14 @@ namespace Cryptolens_PHP_Client {
                     }
                 }
                 return true;
+            }
+        }
+
+        private function check_rm($data){
+            if($data["result"] == 0){
+                return true;
+            } else {
+                return false;
             }
         }
     }

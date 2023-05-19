@@ -49,12 +49,12 @@ In a real values for you can be obtained as follows:
   * [x] add_feature
   * [x] block_key
   * [x] extend_license
-  * [ ] remove_feature
-  * [ ] unblock_key
-  * [ ] machine_lock_limit
-  * [ ] change_notes
-  * [ ] change_reseller
-  * [ ] change_customer
+  * [x] remove_feature
+  * [x] unblock_key
+  * [x] machine_lock_limit
+  * [ ] change_notes*
+  * [ ] change_reseller*
+  * [ ] change_customer*
   * [ ] Offline Verification
 * Customer
 * Data Object
@@ -66,3 +66,5 @@ In a real values for you can be obtained as follows:
 * Message
 * Subscription
 * Reseller
+
+* = Considered with less priority, therefore this endpoint will not be implemented, yet.
