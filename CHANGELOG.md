@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.4.1
+
+* added two functions to generate a machine ID for the PHP instance. `Key::getMachineId` returns a hash of the machine ID, whereas `Key::getMachineIdPlain` returns the machine ID in readable format, not hashed. Read the function documentation for information of this hash being calculated.
+
 ## v0.4
 
 * outsourced helper function into the `Helper.cryptolens.php` class
