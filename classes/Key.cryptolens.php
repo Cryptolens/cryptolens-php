@@ -11,6 +11,29 @@ namespace Cryptolens_PHP_Client {
             $this->group = Cryptolens::CRYPTOLENS_KEY;
         }
 
+        /**
+         * getMachineId() - Generates a machine ID based on the server's OS, OS version, hostname, architecture, total disk space, unix timestamp of creation of root file system and php's currently installed version
+         * 
+         * The hash generated strips out any white spaces and commas and replaces them with two underlines "__"
+         * The possibility of this method being completely unique is not given, as a update of the php version results in the hash getting invalid.
+         * The function `getMachineIdPlain` allows you to retrieve an JSON to cache this value to generate the hash later on again for comparison.
+         */
+        public static function getMachineId(){
+            $fingerprint = [php_uname(), disk_total_space("."), filectime("/"), phpversion()];
+            return hash("sha256", json_encode($fingerprint));
+        }
+
+        public static function getMachineIdPlain(){
+            $fingerprint = [php_uname(), disk_total_space("."), filectime("/"), phpversion()];
+            foreach($fingerprint as $key => $value){
+                $fingerprint[$key] = str_replace([" ", ",", "\n", "\r", "\t", "\v", "\x00"], "__", $fingerprint[$key]);
+            }
+            $fingerprint = implode("__", $fingerprint);
+            $fingerprint = json_encode($fingerprint);
+
+            return $fingerprint;
+        }
+
 
         /**
          * activate() - Activates a Key
