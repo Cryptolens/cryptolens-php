@@ -52,12 +52,12 @@ namespace Cryptolens_PHP_Client {
         }
 
         public static function loader(){
-            require_once "./classes/Helper.cryptolens.php";
-            require_once "./classes/Key.cryptolens.php";
-            require_once "./classes/Endpoints.cryptolens.php";
-            require_once "./classes/Results.endpoints.cryptolens.php";
-            require_once "./classes/Auth.cryptolens.php";
-            require_once "./classes/Product.cryptolens.php";
+            require_once dirname(__FILE__) . "/classes/Helper.cryptolens.php";
+            require_once dirname(__FILE__) . "/classes/Key.cryptolens.php";
+            require_once dirname(__FILE__) . "/classes/Endpoints.cryptolens.php";
+            require_once dirname(__FILE__) . "/classes/Results.endpoints.cryptolens.php";
+            require_once dirname(__FILE__) . "/classes/Auth.cryptolens.php";
+            require_once dirname(__FILE__) . "/classes/Product.cryptolens.php";
         }
 
         public static function outputHelper($data, int $error = 0){
