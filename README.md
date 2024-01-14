@@ -69,6 +69,21 @@ composer require ente/cryptolens-php
 
 ```
 
+And
+
+```php
+<?php
+
+require "./vendor/autoload.php";
+
+...
+
+?>
+
+to automatically load the required classes.
+
+```
+
 ## Endpoints
 
 * Key
