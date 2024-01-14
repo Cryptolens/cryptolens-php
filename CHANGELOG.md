@@ -2,8 +2,11 @@
 
 ## v0.4.3
 
-* `$additional_flags` is now parsed correctly to the `Helper::build_params` function
+* `$additional_flags` is now parsed correctly to the `Helper::build_params()` function
 * booleans are now parsed correctly to the Cryptolens API
+* added support for Payment Form endpoint `createSession`
+* updated `README.md` with another Code Example and updated the current status of the machine ID generation
+* small changes to the `composer.json`
 
 ## v0.4.2
 
@@ -11,7 +14,7 @@
 
 ## v0.4.1
 
-* added two functions to generate a machine ID for the PHP instance. `Key::getMachineId` returns a hash of the machine ID, whereas `Key::getMachineIdPlain` returns the machine ID in readable format, not hashed. Read the function documentation for information of this hash being calculated.
+* added two functions to generate a machine ID for the PHP instance. `Key::getMachineId()` returns a hash of the machine ID, whereas `Key::getMachineIdPlain()` returns the machine ID in readable format, not hashed. Read the function documentation for information of this hash being calculated.
 
 ## v0.4
 

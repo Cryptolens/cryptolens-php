@@ -19,7 +19,9 @@ namespace Cryptolens_PHP_Client {
             "keyLock" => "https://api.cryptolens.io/api/auth/keylock",
             # Products
             "getKeys" => "https://api.cryptolens.io/api/product/getkeys",
-            "getProducts" => "https://api.cryptolens.io/api/product/getproducts"
+            "getProducts" => "https://api.cryptolens.io/api/product/getproducts",
+            # PaymentForm
+            "createSession" => "https://api.cryptolens.io/api/paymentform/CreateSession"
         ];
 
         public static array $no_response_check = [

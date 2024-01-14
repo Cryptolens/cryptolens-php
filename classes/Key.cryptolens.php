@@ -113,7 +113,6 @@ namespace Cryptolens_PHP_Client {
          */
         public function create_key(array $additional_flags = null){
             $parms = $this->build_params($this->cryptolens->get_token(), $this->cryptolens->get_product_id(), null, null, $additional_flags);
-            echo $parms;
             $c = $this->connection($parms, "createKey");
             if($c == true){
                 switch($c){

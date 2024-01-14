@@ -2,7 +2,7 @@
 namespace Cryptolens_PHP_Client {
     class Helper extends Cryptolens {
 
-        public function build_params($token, $product_id, $key = null, $machineid = null, array $additional_flags = null){
+        public static function build_params($token, $product_id, $key = null, $machineid = null, array $additional_flags = null){
             $parms = array(
                 "token" => $token,
                 "ProductId" => $product_id,

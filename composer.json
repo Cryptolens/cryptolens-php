@@ -3,14 +3,14 @@
     "description": "Manage your licenses with this Cryptolens API client",
     "type": "library",
     "license": "MIT",
-    "version": "0.4.2",
+    "version": "0.4.3",
     "authors": [
         {
             "name": "Ente",
-            "email": "ente@openducks.org"
+            "email": "bryan@duckerz.de"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {
         "php": ">=7.4"
     },

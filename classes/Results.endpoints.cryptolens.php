@@ -64,10 +64,10 @@ namespace Cryptolens_PHP_Client {
             ],
             "Auth" => [
                 "keyLock" => [
-                    "keyid",
-                    "token",
-                    "result",
-                    "message"
+                    "Keyid",
+                    "Token",
+                    "Result",
+                    "Message"
                 ]
                 ],
             "Product" => [
@@ -84,7 +84,15 @@ namespace Cryptolens_PHP_Client {
                     "Result",
                     "Message"
                 ]
+            ],
+            "PaymentForm" => [
+                "createSession" => [
+                    "SessionId",
+                    "Result",
+                    "Message"
+                ]
             ]
+
         ];
 
         public static function get_results(){

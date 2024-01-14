@@ -3,10 +3,27 @@
 This repository contains functions for interacting with the Cryptolens
 Web API from PHP. Currently only a few endpoints are supported and more are following.
 
-To use the library, you can `require_once` the `loader.php` which loads all other classes automatically.
+To use the library, you can `require_once` the `loader.php` which loads all other classes automatically or use composer where you just have to `require` the composer `autoload.php`.
 Inside your script you need to `use` the classes, here is an example:
 
 ## Code example
+
+```php
+<?php
+ini_set("display_errors", 1);
+require_once "path/to/composer/autoload.php";
+use Cryptolens_PHP_Client\Cryptolens;
+use Cryptolens_PHP_Client\Key;
+$c = new Cryptolens("YOUR_TOKEN", 12345, Cryptolens::CRYPTOLENS_OUTPUT_JSON);
+$k = new Key($c);
+
+$key = "XXXXX-XXXXX-XXXXX-XXXXX";
+$machine_id = $k->getMachineId();
+print_r("Key 'activate':" . var_dump($k->activate($key, $machine_id)));
+?>
+```
+
+## Code Example: Check License for features
 
 ```php
 <?php
@@ -17,9 +34,17 @@ use Cryptolens_PHP_Client\Key;
 $c = new Cryptolens("YOUR_TOKEN", 12345, Cryptolens::CRYPTOLENS_OUTPUT_JSON);
 $k = new Key($c);
 
-$key = "XXXXX-XXXXX-XXXXX-XXXXX";
-$machine_id = "MACHINE-ID";
-print_r("Key 'activate':" . var_dump($k->activate($key, $machine_id)));
+# generate new key and activate Feature 3 for it
+$key = $k->create_key(["F3" => true])["key"];
+
+$license_data = json_decode($k->get_key($key), true);
+
+if($license_data["F3"]){
+  echo "Feature 3 enabled for license " . $key; 
+} elseif($license_data["F4"]){
+  echo "Feature 4 enabled for license " . $key;
+}
+
 ?>
 ```
 
@@ -31,9 +56,7 @@ In a real values for you can be obtained as follows:
    (<https://app.cryptolens.io/Product>), and then the product id is found above the list
    of keys.
 * The license key would be obtained from the user in an application dependant way.
-* Currently the PHP library does not compute the machine code, either the machine
-   code can be computed by the application, or a dummy value can be used. In a future
-   release the library itself will compute the machine code.
+* You can generate a machine ID for the PHP instance with the builtin `Key::getMachineId()` funtion. Please read the function's documentation for more understanding of the calculation of the machine ID.
 
 ## Installation
 
@@ -71,6 +94,7 @@ composer require ente/cryptolens-php
 * Auth
   * [x] key_lock **(Use with caution\*\*)**  
 * Payment Form
+  * [x] create_session
 * Get Token
 * Analytics
 * Message
