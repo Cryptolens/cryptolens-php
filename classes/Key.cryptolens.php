@@ -113,6 +113,7 @@ namespace Cryptolens_PHP_Client {
          */
         public function create_key(array $additional_flags = null){
             $parms = $this->build_params($this->cryptolens->get_token(), $this->cryptolens->get_product_id(), null, null, $additional_flags);
+            echo $parms;
             $c = $this->connection($parms, "createKey");
             if($c == true){
                 switch($c){
@@ -339,13 +340,35 @@ namespace Cryptolens_PHP_Client {
                 $parms["Key"] = $key;
             };
             if($machineid != null){
-                $parms["MachineCode"] = $machineid;
+                $parms["MachineCode"] = "";# empty string to prevent error
             }
             if($additional_flags != null){
-                $parms = array_merge($parms, $additional_flags);
+                if(is_array($additional_flags)){
+                    foreach($additional_flags as $key => $value){
+                        if(is_array($value)){
+                            $value = implode(",", $value);
+                        } elseif(is_bool($value)){
+                            if($value == true){
+                                $value = "true";
+                            } else {
+                                $value = "false";
+                            }
+                        } elseif(!is_string($value)){
+                            $value = (string) $value;
+                        }
+                        $parms[$key] = $value;
+                    }
+                    #print_r(var_dump($parms));
+                } else {
+                    echo "Parsed \$additional_flags not as an array!";
+                }
             }
             $postfields = ''; $first = true;
             foreach($parms as $i => $x){
+                if (is_array($x)) {
+                    // detect array an skip
+                    continue; // Überspringe die Kodierung für diesen Durchlauf
+                }
                 if($first) { $first = false; } else { $postfields .= '&';}
 
                 $postfields .= urlencode($i) . "=" . urlencode($x);

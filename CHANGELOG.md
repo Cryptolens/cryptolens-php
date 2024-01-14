@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.4.3
+
+* `$additional_flags` is now parsed correctly to the `Helper::build_params` function
+* booleans are now parsed correctly to the Cryptolens API
+
 ## v0.4.2
 
 * fixed require path for `Cryptolens::loader()`-function
