@@ -79,10 +79,10 @@ require "./vendor/autoload.php";
 ...
 
 ?>
+```
 
 to automatically load the required classes.
 
-```
 
 ## Endpoints
 
