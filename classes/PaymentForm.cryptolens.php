@@ -27,7 +27,7 @@ namespace Cryptolens_PHP_Client {
          * @link https://api.cryptolens.io/api/paymentform/CreateSession
          */
 
-        public function create_session($form_id, $expires = 60, $price = 0, $currency = "USD", $additional_flags = null){
+        public function create_session(int $form_id, int $expires = 60, float $price = 0, string $currency = "USD", array $additional_flags = null){
             if($additional_flags == null){$additional_flags = array();};
             $parms = Helper::build_params($this->cryptolens->get_token(), $this->cryptolens->get_product_id(), null, null, array_merge(array("PaymentFormId" => $form_id, "Expires" => $expires, "Prices" => $price, "Currency" => $currency), $additional_flags));
             $c = Helper::connection($parms, "createSession", "PaymentForm");

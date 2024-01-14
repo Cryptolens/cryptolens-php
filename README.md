@@ -6,6 +6,8 @@ Web API from PHP. Currently only a few endpoints are supported and more are foll
 To use the library, you can `require_once` the `loader.php` which loads all other classes automatically or use composer where you just have to `require` the composer `autoload.php`.
 Inside your script you need to `use` the classes, here is an example:
 
+Needs PHP >7.4.0, works with 8.2
+
 ## Code example
 
 ```php
