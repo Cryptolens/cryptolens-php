@@ -58,20 +58,32 @@ namespace Cryptolens_PHP_Client {
                 }
 
                 if($license["ProductId"] !== $this->cryptolens->get_product_id() || $license["Key"] !== $key){
-                    return "Malformed response."; # cryptolens response malformed or incorrect on client side
+                    return Cryptolens::outputHelper([
+                        "error" => "An error occured while activating key - Malformed response recieved.",
+                        "response" => $c
+                    ]);
                 }
 
                 $m = false;
                 foreach($license["ActivatedMachines"] as $machine){
                     if(!array_key_exists("Mid", $machine)){
-                        return "Already activated on this client."; # already activated on this client
+                        return Cryptolens::outputHelper([
+                            "error" => "An error occured while activating key - The license has already been enabled on this machine.",
+                            "response" => $c
+                        ]);
                     }
                     if($machine["Mid"] !== $machineid){
-                        return "Devide could not be found."; # device not found
+                        return Cryptolens::outputHelper([
+                            "error" => "An error occured while activating key - The key can not be activated on this machine as the recieved machine ID is not the same as sent.",
+                            "response" => $c
+                        ]);
                     }
                 }
                 if($license["Expires"] < time()){
-                    return "Key already expired."; # key already expired.
+                    return Cryptolens::outputHelper([
+                        "error" => "An error occured while activating key - The key has already expired.",
+                        "response" => $c
+                    ]);
                 }
 
                 return Cryptolens::outputHelper([
