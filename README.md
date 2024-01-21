@@ -115,6 +115,9 @@ to automatically load the required classes.
 * Get Token
 * Analytics
 * Message
+  * [x] get_messages
+  * [x] create_message
+  * [x] remove_message
 * Subscription
 * Reseller
 

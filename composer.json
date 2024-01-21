@@ -3,11 +3,15 @@
     "description": "Manage your licenses with this Cryptolens API client",
     "type": "library",
     "license": "MIT",
-    "version": "0.4.3",
+    "version": "0.5",
     "authors": [
         {
             "name": "Ente",
             "email": "bryan@duckerz.de"
+        },
+        {
+            "name": "Cryptolens AB",
+            "homepage": "https://cryptolens.io"
         }
     ],
     "minimum-stability": "stable",

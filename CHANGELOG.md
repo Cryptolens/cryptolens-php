@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.5
+
+* now supporting the Messages endpoints `createMessage`, `removeMessage` and `getMessages`
+* rewritten some error messages
+
 ## v0.4.3
 
 * `$additional_flags` is now parsed correctly to the `Helper::build_params()` function

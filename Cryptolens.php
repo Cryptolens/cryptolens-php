@@ -14,6 +14,8 @@ namespace Cryptolens_PHP_Client {
         public const CRYPTOLENS_PRODUCT = "Product";
 
         public const CRYPTOLENS_PAYMENTFORM = "PaymentForm";
+
+        public const CRYPTOLENS_MESSAGE = "Message";
         
         private string $token;
 
@@ -61,6 +63,7 @@ namespace Cryptolens_PHP_Client {
             require_once dirname(__FILE__) . "/classes/Auth.cryptolens.php";
             require_once dirname(__FILE__) . "/classes/Product.cryptolens.php";
             require_once dirname(__FILE__) . "/classes/PaymentForm.cryptolens.php";
+            require_once dirname(__FILE__) . "/classes/Message.cryptolens.php";
         }
 
         public static function outputHelper($data, int $error = 0){

@@ -91,7 +91,23 @@ namespace Cryptolens_PHP_Client {
                     "Result",
                     "Message"
                 ]
-            ]
+            ],
+            "Message" => [
+                "createMessage" => [
+                    "MessageId",
+                    "Result",
+                    "Message"
+                ],
+                "removeMessage" => [
+                    "Result",
+                    "Message"
+                ],
+                "getMessages" => [
+                    "Messages",
+                    "Result",
+                    "Message"
+                ]
+            ],
 
         ];
 

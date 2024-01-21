@@ -34,7 +34,7 @@ namespace Cryptolens_PHP_Client {
                     }
                     #print_r(var_dump($parms));
                 } else {
-                    echo "Parsed \$additional_flags not as an array!";
+                    echo "\$additional_flags is not parsed as an array!";
                 }
             }
             $postfields = ''; $first = true;
@@ -77,7 +77,7 @@ namespace Cryptolens_PHP_Client {
 
         private static function check_response($res, $endpoint, $group){
             if(is_null($res)){
-                return "Res == null";
+                return "Cryptolens response returned null. Aborting.";
             } else {
                 if(in_array($endpoint, Endpoints::$no_response_check)){
                     return true;
@@ -85,7 +85,7 @@ namespace Cryptolens_PHP_Client {
                 foreach($res as $r){
                     foreach(Results::get_results()[$group][$endpoint] as $e){
                         if(!strcasecmp($r, $e) == 0){
-                            return "Not found variable";
+                            return "Could not validate response correctly, as some expected keys could not be found in the response.";
                         }
                     }
                 }

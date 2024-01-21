@@ -21,13 +21,18 @@ namespace Cryptolens_PHP_Client {
             "getKeys" => "https://api.cryptolens.io/api/product/getkeys",
             "getProducts" => "https://api.cryptolens.io/api/product/getproducts",
             # PaymentForm
-            "createSession" => "https://api.cryptolens.io/api/paymentform/CreateSession"
+            "createSession" => "https://api.cryptolens.io/api/paymentform/CreateSession",
+            # Message
+            "createMessage" => "https://api.cryptolens.io/api/message/CreateMessage",
+            "removeMessage" => "https://api.cryptolens.io/api/message/RemoveMessage",
+            "getMessages" => "https://api.cryptolens.io/api/message/GetMessages",
         ];
 
         public static array $no_response_check = [
             "createKey",
             "getKeys",
-            "getProducts"
+            "getProducts",
+            "getMessages"
         ];
 
         public static function get_endpoint($function_name){
