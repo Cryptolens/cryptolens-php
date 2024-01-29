@@ -3,7 +3,7 @@
     "description": "Manage your licenses with this Cryptolens API client",
     "type": "library",
     "license": "MIT",
-    "version": "0.7",
+    "version": "0.8",
     "authors": [
         {
             "name": "Ente",

@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.8
+
+* added support to Customer endpoints `addCustomer`, `editCustomer`, `removeCustomer`, `getCustomerLicenses` and `getCustomers`
+
 ## v0.7
 
 * added support to Subscription endpoint `record_usage`

@@ -1,7 +1,9 @@
 # Cryptolens PHP
 
 This repository contains functions for interacting with the Cryptolens
-Web API from PHP. Currently only a few endpoints are supported and more are following.
+Web API from PHP. Currently most endpoints are supported and more are following.
+
+For more information about the API and possible values and types, visit https://app.cryptolens.io/docs/api/v3, the official API documentation
 
 To use the library, you can `require_once` the `loader.php` which loads all other classes automatically or use composer where you just have to `require` the composer `autoload.php`.
 Inside your script you need to `use` the classes, here is an example:
@@ -104,6 +106,11 @@ to automatically load the required classes.
   * [ ] change_customer\*
   * [ ] Offline Verification
 * Customer
+  * [x] add_customer
+  * [x] edit_customer
+  * [x] remove_customer
+  * [x] get_customer_licenses (does not support the GetCustomerLicensesBySecret Method, yet)
+  * [x] get_customers
 * Data Object
 * Product
   * [x] get_keys
