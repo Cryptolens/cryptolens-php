@@ -14,13 +14,35 @@ namespace Cryptolens_PHP_Client {
                 $parms["Key"] = $key;
             };
             if($machineid != null){
-                $parms["MachineCode"] = $machineid;
+                $parms["MachineCode"] = "";# empty string to prevent error
             }
             if($additional_flags != null){
-                $parms = array_merge($parms, $additional_flags);
+                if(is_array($additional_flags)){
+                    foreach($additional_flags as $key => $value){
+                        if(is_array($value)){
+                            $value = implode(",", $value);
+                        } elseif(is_bool($value)){
+                            if($value == true){
+                                $value = "true";
+                            } else {
+                                $value = "false";
+                            }
+                        } elseif(!is_string($value)){
+                            $value = (string) $value;
+                        }
+                        $parms[$key] = $value;
+                    }
+                    #print_r(var_dump($parms));
+                } else {
+                    echo "\$additional_flags is not parsed as an array!";
+                }
             }
             $postfields = ''; $first = true;
             foreach($parms as $i => $x){
+                if (is_array($x)) {
+                    // detect array an skip
+                    continue; // Überspringe die Kodierung für diesen Durchlauf
+                }
                 if($first) { $first = false; } else { $postfields .= '&';}
 
                 $postfields .= urlencode($i) . "=" . urlencode($x);
@@ -55,7 +77,7 @@ namespace Cryptolens_PHP_Client {
 
         private static function check_response($res, $endpoint, $group){
             if(is_null($res)){
-                return "Res == null";
+                return "Cryptolens response returned null. Aborting.";
             } else {
                 if(in_array($endpoint, Endpoints::$no_response_check)){
                     return true;
@@ -63,7 +85,7 @@ namespace Cryptolens_PHP_Client {
                 foreach($res as $r){
                     foreach(Results::get_results()[$group][$endpoint] as $e){
                         if(!strcasecmp($r, $e) == 0){
-                            return "Not found variable";
+                            return "Could not validate response correctly, as some expected keys could not be found in the response.";
                         }
                     }
                 }
