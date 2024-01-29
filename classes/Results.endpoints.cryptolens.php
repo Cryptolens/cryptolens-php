@@ -108,6 +108,37 @@ namespace Cryptolens_PHP_Client {
                     "Message"
                 ]
             ],
+            "Reseller" => [
+                "addReseller" => [
+                    "ResellerId",
+                    "Result",
+                    "Message"
+                ],
+                "editReseller" => [
+                    "Result",
+                    "Message"
+                ],
+                "removeReseller" => [
+                    "Result",
+                    "Message"
+                ],
+                "getResellers" => [
+                    "Resellers",
+                    "Result",
+                    "Message"
+                ],
+                "getResellerCustomers" => [
+                    "Customers",
+                    "Result",
+                    "Message"
+                ]
+            ],
+            "Subscription" => [
+                "recordUsage" => [
+                    "Result",
+                    "Message"
+                ]
+            ]
 
         ];
 

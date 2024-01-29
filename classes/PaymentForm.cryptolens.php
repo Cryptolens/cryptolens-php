@@ -9,7 +9,7 @@ namespace Cryptolens_PHP_Client {
 
         public function __construct(Cryptolens $cryptolens){
             $this->cryptolens = $cryptolens;
-            $this->group = Cryptolens::CRYPTOLENS_PRODUCT;
+            $this->group = Cryptolens::CRYPTOLENS_PAYMENTFORM;
         }
 
         /**
@@ -30,7 +30,7 @@ namespace Cryptolens_PHP_Client {
         public function create_session(int $form_id, int $expires = 60, float $price = 0, string $currency = "USD", array $additional_flags = null){
             if($additional_flags == null){$additional_flags = array();};
             $parms = Helper::build_params($this->cryptolens->get_token(), $this->cryptolens->get_product_id(), null, null, array_merge(array("PaymentFormId" => $form_id, "Expires" => $expires, "Prices" => $price, "Currency" => $currency), $additional_flags));
-            $c = Helper::connection($parms, "createSession", "PaymentForm");
+            $c = Helper::connection($parms, "createSession", $this->group);
             if($c == true){
                 if(Helper::check_rm($c)){
                     return Cryptolens::outputHelper($c);
