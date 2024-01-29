@@ -118,6 +118,7 @@ to automatically load the required classes.
   * [x] create_message
   * [x] remove_message
 * Subscription
+  * [x] record_usage
 * Reseller
   * [x] add_reseller
   * [x] edit_reseller

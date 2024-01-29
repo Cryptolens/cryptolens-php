@@ -68,7 +68,7 @@ namespace Cryptolens_PHP_Client {
                 };
             }
             $parms = Helper::build_params($this->cryptolens->get_token(), $this->cryptolens->get_product_id(), null, null, $additional_flags);
-            $c = Helper::connection($parms, "getKeys", "Product");
+            $c = Helper::connection($parms, "getKeys", $this->group);
 
             if($c == true){
                 if(Helper::check_rm($c)){
@@ -81,7 +81,7 @@ namespace Cryptolens_PHP_Client {
 
         public function get_products(){
             $parms = Helper::build_params($this->cryptolens->get_token(), $this->cryptolens->get_product_id());
-            $c = Helper::connection($parms, "getProducts", "Product");
+            $c = Helper::connection($parms, "getProducts", $this->group);
             if($c == true){
                 if(Helper::check_rm($c)){
                     return Cryptolens::outputHelper($c);

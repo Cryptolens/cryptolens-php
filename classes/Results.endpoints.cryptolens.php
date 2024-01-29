@@ -132,6 +132,12 @@ namespace Cryptolens_PHP_Client {
                     "Result",
                     "Message"
                 ]
+            ],
+            "Subscription" => [
+                "recordUsage" => [
+                    "Result",
+                    "Message"
+                ]
             ]
 
         ];

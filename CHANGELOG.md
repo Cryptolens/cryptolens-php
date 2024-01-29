@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.7
+
+* added support to Subscription endpoint `record_usage`
+* corrected `group` attribute in `PaymentForm.cryptolens.php`
+
 ## v0.6
 
 * added support to Reseller endpoints `addReseller`, `editReseller`, `removeReseller`, `getResellers` and `getResellerCustomers`

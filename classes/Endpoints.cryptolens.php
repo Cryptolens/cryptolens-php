@@ -32,6 +32,8 @@ namespace Cryptolens_PHP_Client {
             "removeReseller" => "https://api.cryptolens.io/api/reseller/RemoveReseller",
             "getResellers" => "https://api.cryptolens.io/api/reseller/GetResellers",
             "getResellerCustomers" => "https://api.cryptolens.io/api/reseller/GetResellerCustomers",
+            # Subscription
+            "recordUsage" => "https://api.cryptolens.io/api/subscription/RecordUsage"
         ];
 
         public static array $no_response_check = [
