@@ -138,6 +138,30 @@ namespace Cryptolens_PHP_Client {
                     "Result",
                     "Message"
                 ]
+            ],
+            "Customer" => [
+                "addCustomer" => [
+                    "CustomerId",
+                    "PortalLink",
+                    "Secret",
+                    "Result",
+                    "Message"
+                ],
+                "editCustomer" => [
+                    "CustomerId",
+                    "Result",
+                    "Message"
+                ],
+                "removeCustomer" => [
+                    "Result",
+                    "Message"
+                ],
+                "getCustomerLicenses" => [
+                    "LicenseKeys",
+                    "Metadata",
+                    "Result",
+                    "Message"
+                ]
             ]
 
         ];
