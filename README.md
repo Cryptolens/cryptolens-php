@@ -112,7 +112,6 @@ to automatically load the required classes.
   * [x] key_lock **(Use with caution\*\*)**  
 * Payment Form
   * [x] create_session
-* Get Token
 * Analytics
 * Message
   * [x] get_messages
@@ -120,6 +119,11 @@ to automatically load the required classes.
   * [x] remove_message
 * Subscription
 * Reseller
+  * [x] add_reseller
+  * [x] edit_reseller
+  * [x] remove_reseller
+  * [x] get_resellers
+  * [x] get_reseller_customers
 
 * = Considered with less priority, therefore this endpoint will not be implemented, yet.
 * ** = This method creates, retrieves or contains sensitive information (e.g. Access Tokens)

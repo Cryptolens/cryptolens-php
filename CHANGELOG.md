@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.6
+
+* added support to Reseller endpoints `addReseller`, `editReseller`, `removeReseller`, `getResellers` and `getResellerCustomers`
 
 ## v0.5
 
