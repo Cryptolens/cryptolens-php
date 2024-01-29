@@ -1,5 +1,6 @@
 # Changelog
 
+
 ## v0.5
 
 * now supporting the Messages endpoints `createMessage`, `removeMessage` and `getMessages`
@@ -13,6 +14,7 @@
 * updated `README.md` with another Code Example and updated the current status of the machine ID generation
 * small changes to the `composer.json`
 * fixed return values for `Key::activate()` to now return arrays on errors to be compliant with the `Helper::outputHelper()` function
+
 
 ## v0.4.2
 

@@ -64,6 +64,7 @@ namespace Cryptolens_PHP_Client {
             require_once dirname(__FILE__) . "/classes/Product.cryptolens.php";
             require_once dirname(__FILE__) . "/classes/PaymentForm.cryptolens.php";
             require_once dirname(__FILE__) . "/classes/Message.cryptolens.php";
+
         }
 
         public static function outputHelper($data, int $error = 0){
