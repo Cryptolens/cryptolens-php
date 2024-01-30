@@ -1,90 +1,105 @@
 <?php
+namespace Cryptolens_PHP_Client {
+    class Cryptolens {
 
-function cryptolens_activate($token, $product_id, $key, $machine_code)
-{
-  $params = 
-    array(
-        'token' => $token
-      , 'ProductId' => $product_id
-      , 'Key' => $key
-      , 'Sign' => 'True'
-      , 'MachineCode' => $machine_code
-      , 'SignMethod' => 1
-      , 'v' => 1
-      );
-  $postfields = '';
-  $first = TRUE;
-  foreach ($params as $i => $x) {
-    if ($first) { $first = FALSE; } else { $postfields .= '&'; }
 
-    $postfields .= urlencode($i);
-    $postfields .= '=';
-    $postfields .= urlencode($x);
-  }
-  unset($i, $x);
+        public const CRYPTOLENS_OUTPUT_PHP = 1;
 
-  $curl = curl_init();
-  curl_setopt_array($curl, array(
-      CURLOPT_RETURNTRANSFER => 1
-    , CURLOPT_URL => 'https://app.cryptolens.io/api/key/Activate'
-    , CURLOPT_POST => 1
-    , CURLOPT_POSTFIELDS => $postfields
-  ));
-  $result = curl_exec($curl);
-  curl_close($curl);
+        public const CRYPTOLENS_OUTPUT_JSON = 2;
 
-  $resp = json_decode($result);
-  if ( is_null($resp)
-    || !property_exists($resp, 'message')
-    || $resp->{'message'} !== ''
-    || !property_exists($resp, 'licenseKey')
-    || !property_exists($resp, 'signature')
-     )
-  {
-    return FALSE;
-  }
+        public const CRYPTOLENS_KEY = "Key";
 
-  $license_key_string = base64_decode($resp->{'licenseKey'});
-  if (!$license_key_string) { return FALSE; }
+        public const CRYPTOLENS_AUTH = "Auth";
 
-  $license_key = json_decode($license_key_string);
-  if ( is_null($license_key)
-    || !property_exists($license_key, 'ProductId')
-    || !is_int($license_key->{'ProductId'})
-    || !property_exists($license_key, 'Key')
-    || !is_string($license_key->{'Key'})
-    || !property_exists($license_key, 'Expires')
-    || !is_int($license_key->{'Expires'})
-    || !property_exists($license_key, 'ActivatedMachines')
-    //|| !is_iterable($license_key->{'ActivatedMachines'})
-     )
-  {
-    return FALSE;
-  }
+        public const CRYPTOLENS_PRODUCT = "Product";
 
-  if ( $license_key->{'ProductId'} !== $product_id
-    || $license_key->{'Key'} !== $key
-     )
-  {
-    return FALSE;
-  }
+        public const CRYPTOLENS_PAYMENTFORM = "PaymentForm";
 
-  $machine_found = FALSE;
-  foreach ($license_key->{'ActivatedMachines'} as $machine) {
-    if (!property_exists($machine, 'Mid'))
-    {
-      return FALSE;
+        public const CRYPTOLENS_MESSAGE = "Message";
+
+        public const CRYPTOLENS_RESELLER = "Reseller";
+
+        public const CRYPTOLENS_SUBSCRIPTION = "Subscription";
+
+        public const CRYPTOLENS_CUSTOMER = "Customer";
+        
+        private string $token;
+
+        private int $version = 2;
+
+        private int $productId;
+
+        public static int $output;
+
+    
+        private function set_token(string $token): void{
+            $this->token = $token;
+        }
+        private function set_product_id($product_id){
+            $this->productId = $product_id;
+        }
+
+        /**
+         * If $output equals CRYPTOLENS_OUTPUT_PHP you recieve arrays, if it's on CRYPTOLENS_OUTPUT_JSON you recieve json
+         */
+        public function __construct($token, $productid, $output = self::CRYPTOLENS_OUTPUT_PHP){
+            self::$output = $output;
+            $this->set_token($token);
+            $this->set_product_id($productid);
+        }
+
+
+        public function get_token(){
+            return $this->token;
+        }
+
+      public function get_product_id(){
+            return $this->productId;
+        }
+
+        public function set_output($output){
+            $this->output = $output;
+        }
+
+        public static function loader(){
+            require_once dirname(__FILE__) . "/classes/Helper.cryptolens.php";
+            require_once dirname(__FILE__) . "/classes/Key.cryptolens.php";
+            require_once dirname(__FILE__) . "/classes/Endpoints.cryptolens.php";
+            require_once dirname(__FILE__) . "/classes/Results.endpoints.cryptolens.php";
+            require_once dirname(__FILE__) . "/classes/Auth.cryptolens.php";
+            require_once dirname(__FILE__) . "/classes/Product.cryptolens.php";
+            require_once dirname(__FILE__) . "/classes/PaymentForm.cryptolens.php";
+            require_once dirname(__FILE__) . "/classes/Message.cryptolens.php";
+            require_once dirname(__FILE__) . "/classes/Reseller.cryptolens.php";
+            require_once dirname(__FILE__) . "/classes/Subscription.cryptolens.php";
+            require_once dirname(__FILE__) . "/classes/Customer.cryptolens.php";
+
+        }
+
+        public static function outputHelper($data, int $error = 0){
+            if(self::$output == self::CRYPTOLENS_OUTPUT_PHP){
+                if($error == 1){
+                    return [
+                        "error" => "An error occured!",
+                        "message" => $data["message"]
+                    ];
+                    
+                }
+                return (array) $data;
+            } elseif(self::$output == self::CRYPTOLENS_OUTPUT_JSON){
+                if($error == 1){
+                    return [
+                        "error" => "An error occured!",
+                        "message" => $data["message"]
+                    ];
+                }
+                return json_encode($data);
+            }
+        }
+
     }
-
-    if ($machine->{'Mid'} == $machine_code) { $machine_found = TRUE; }
-  }
-  unset($machine);
-  if (!$machine_found) { return FALSE; }
-
-  $time = time();
-  if ($license_key->{'Expires'} < $time) { return FALSE; }
-
-  return TRUE;
 }
+
+
 
 ?>

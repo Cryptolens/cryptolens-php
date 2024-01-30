@@ -1,26 +1,53 @@
 # Cryptolens PHP
 
 This repository contains functions for interacting with the Cryptolens
-Web API from PHP. Currently only activation of keys is supported.
+Web API from PHP. Currently most endpoints are supported and more are following.
+
+For more information about the API and possible values and types, visit https://app.cryptolens.io/docs/api/v3, the official API documentation
+
+To use the library, you can `require_once` the `loader.php` which loads all other classes automatically or use composer where you just have to `require` the composer `autoload.php`.
+Inside your script you need to `use` the classes, here is an example:
+
+Needs PHP >7.4.0, works with 8.2
 
 ## Code example
 
 ```php
 <?php
-require_once('Cryptolens.php');
+ini_set("display_errors", 1);
+require_once "path/to/composer/autoload.php";
+use Cryptolens_PHP_Client\Cryptolens;
+use Cryptolens_PHP_Client\Key;
+$c = new Cryptolens("YOUR_TOKEN", 12345, Cryptolens::CRYPTOLENS_OUTPUT_JSON);
+$k = new Key($c);
 
-$activate = cryptolens_activate(
-      // Access token
-      'WyI0NjUiLCJBWTBGTlQwZm9WV0FyVnZzMEV1Mm9LOHJmRDZ1SjF0Vk52WTU0VzB2Il0='
-      // Product Id
-    , 3646
-      // License Key
-    , 'MPDWY-PQAOW-FKSCH-SGAAU'
-      // Machine code
-    , '289jf2afs3'
-    );
+$key = "XXXXX-XXXXX-XXXXX-XXXXX";
+$machine_id = $k->getMachineId();
+print_r("Key 'activate':" . var_dump($k->activate($key, $machine_id)));
+?>
+```
 
-// $activate is now a boolean indicating if the activation attempt was successful or not
+## Code Example: Check License for features
+
+```php
+<?php
+ini_set("display_errors", 1);
+require_once "./loader.php";
+use Cryptolens_PHP_Client\Cryptolens;
+use Cryptolens_PHP_Client\Key;
+$c = new Cryptolens("YOUR_TOKEN", 12345, Cryptolens::CRYPTOLENS_OUTPUT_JSON);
+$k = new Key($c);
+
+# generate new key and activate Feature 3 for it
+$key = $k->create_key(["F3" => true])["key"];
+
+$license_data = json_decode($k->get_key($key), true);
+
+if($license_data["F3"]){
+  echo "Feature 3 enabled for license " . $key; 
+} elseif($license_data["F4"]){
+  echo "Feature 4 enabled for license " . $key;
+}
 
 ?>
 ```
@@ -28,11 +55,83 @@ $activate = cryptolens_activate(
 The code above uses our testing access token, product id, license key and machine code.
 In a real values for you can be obtained as follows:
 
- * Access tokens can be created at https://app.cryptolens.io/User/AccessToken (remember to check 'Activate' and keep everything else unchanged)
- * The product id is found by selecting the relevant product from the list of products
-   (https://app.cryptolens.io/Product), and then the product id is found above the list
+* Access tokens can be created at <https://app.cryptolens.io/User/AccessToken>
+* The product id is found by selecting the relevant product from the list of products
+   (<https://app.cryptolens.io/Product>), and then the product id is found above the list
    of keys.
- * The license key would be obtained from the user in an application dependant way.
- * Currently the PHP library does not compute the machine code, either the machine
-   code can be computed by the application, or a dummy value can be used. In a future
-   release the library itself will compute the machine code.
+* The license key would be obtained from the user in an application dependant way.
+* You can generate a machine ID for the PHP instance with the builtin `Key::getMachineId()` funtion. Please read the function's documentation for more understanding of the calculation of the machine ID.
+
+## Installation
+
+You can either clone this repository and require the `loader.php` (which contains a autoloader) or use composer via console:
+
+```bash
+composer require ente/cryptolens-php
+
+```
+
+And
+
+```php
+<?php
+
+require "./vendor/autoload.php";
+
+...
+
+?>
+```
+
+to automatically load the required classes.
+
+
+## Endpoints
+
+* Key
+  * [x] activate
+  * [x] deactivate
+  * [x] create_key
+  * [x] create_trial_key
+  * [x] create_key_from_template
+  * [x] get_key
+  * [x] add_feature
+  * [x] block_key
+  * [x] extend_license
+  * [x] remove_feature
+  * [x] unblock_key
+  * [x] machine_lock_limit
+  * [ ] change_notes\*
+  * [ ] change_reseller\*
+  * [ ] change_customer\*
+  * [ ] Offline Verification
+* Customer
+  * [x] add_customer
+  * [x] edit_customer
+  * [x] remove_customer
+  * [x] get_customer_licenses (does not support the GetCustomerLicensesBySecret Method, yet)
+  * [x] get_customers
+* Data Object
+* Product
+  * [x] get_keys
+  * [x] get_products
+* Auth
+  * [x] key_lock **(Use with caution\*\*)**  
+* Payment Form
+  * [x] create_session
+* Analytics
+* Message
+  * [x] get_messages
+  * [x] create_message
+  * [x] remove_message
+* Subscription
+  * [x] record_usage
+* Reseller
+  * [x] add_reseller
+  * [x] edit_reseller
+  * [x] remove_reseller
+  * [x] get_resellers
+  * [x] get_reseller_customers
+
+* = Considered with less priority, therefore this endpoint will not be implemented, yet.
+* ** = This method creates, retrieves or contains sensitive information (e.g. Access Tokens)
